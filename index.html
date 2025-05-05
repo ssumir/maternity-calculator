@@ -78,19 +78,19 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label for="lastMonthSalary" class="block text-sm font-medium text-gray-700">Salary (BDT)</label>
-                        <input type="number" id="lastMonthSalary" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                        <input type="number" id="lastMonthSalary" oninput="updateTotalIncome()" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
                     </div>
                     <div>
                         <label for="bonus" class="block text-sm font-medium text-gray-700">Bonus (BDT)</label>
-                        <input type="number" id="bonus" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                        <input type="number" id="bonus" oninput="updateTotalIncome()" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
                     </div>
                     <div>
                         <label for="others" class="block text-sm font-medium text-gray-700">Others (if any)</label>
-                        <input type="number" id="others" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                        <input type="number" id="others" oninput="updateTotalIncome()" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
                     </div>
                     <div>
                         <label for="totalIncome" class="block text-sm font-medium text-gray-700">Total Income (BDT)</label>
-                        <input type="number" id="totalIncome" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                        <input type="number" id="totalIncome" readonly class="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-gray-100">
                     </div>
                 </div>
             </fieldset>
