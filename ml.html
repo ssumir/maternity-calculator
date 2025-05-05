@@ -7,63 +7,119 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
-    <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
+    <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-2xl">
         <h1 class="text-2xl font-bold mb-4 text-center">Maternity Benefit Calculator</h1>
         <form id="calculatorForm" class="space-y-4">
+            <!-- Employee Details -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                    <input type="text" id="name" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                </div>
+                <div>
+                    <label for="idNo" class="block text-sm font-medium text-gray-700">ID No.</label>
+                    <input type="text" id="idNo" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                </div>
+                <div>
+                    <label for="salaryAmount" class="block text-sm font-medium text-gray-700">Salary of Last Duty Month (BDT)</label>
+                    <input type="number" id="salaryAmount" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                </div>
+                <div>
+                    <label for="daysWorked" class="block text-sm font-medium text-gray-700">Days Worked in Last Month</label>
+                    <input type="number" id="daysWorked" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <h2 class="text-xl font-semibold mt-6">Results</h2>
             <div>
-                <label for="monthlySalary" class="block text-sm font-medium text-gray-700">Monthly Salary (BDT)</label>
-                <input type="number" id="monthlySalary" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="Enter monthly salary" required>
+                <label for="avgDailyIncome" class="block text-sm font-medium text-gray-700">Daily Avg. Income</label>
+                <input type="number" id="avgDailyIncome" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" readonly>
             </div>
             <div>
-                <label for="allowances" class="block text-sm font-medium text-gray-700">Monthly Allowances (BDT)</label>
-                <input type="number" id="allowances" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="Enter allowances (if any)">
+                <label for="maternityBenefit" class="block text-sm font-medium text-gray-700">Maternity Benefit (60 Days)</label>
+                <input type="number" id="maternityBenefit" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" readonly>
             </div>
+            <div>
+                <label for="totalPayable" class="block text-sm font-medium text-gray-700">Total Payable Taka</label>
+                <input type="number" id="totalPayable" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" readonly>
+            </div>
+            <div>
+                <label for="totalPayableInWords" class="block text-sm font-medium text-gray-700">Total Payable Taka (In Words)</label>
+                <input type="text" id="totalPayableInWords" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" readonly>
+            </div>
+
+            <!-- Submit Button -->
             <button type="button" id="calculateButton" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">Calculate</button>
         </form>
     </div>
 
     <script>
-        document.getElementById('calculateButton').addEventListener('click', function() {
-            // Get input values
-            const monthlySalary = parseFloat(document.getElementById('monthlySalary').value) || 0;
-            const allowances = parseFloat(document.getElementById('allowances').value) || 0;
+        document.getElementById('calculateButton').addEventListener('click', function () {
+    // Input fields
+    const salaryAmount = parseFloat(document.getElementById('salaryAmount').value);
+    const daysWorked = parseFloat(document.getElementById('daysWorked').value);
 
-            // Calculate average daily wage
-            const totalMonthlyWage = monthlySalary + allowances;
-            const averageDailyWage = totalMonthlyWage / 30;
+    // Check if inputs are valid
+    if (isNaN(salaryAmount) || isNaN(daysWorked) || salaryAmount <= 0 || daysWorked <= 0) {
+        alert('Please enter valid salary and days worked.');
+        return;
+    }
 
-            // Calculate maternity benefit
-            const maternityBenefit = averageDailyWage * 120;
+    // Calculate daily average income
+    const avgDailyIncome = salaryAmount / daysWorked;
 
-            // Open new window to display result
-            const resultWindow = window.open('', '_blank', 'width=400,height=300');
-            resultWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Maternity Benefit Result</title>
-                    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-                    <style>
-                        @media print {
-                            .no-print { display: none; }
-                        }
-                    </style>
-                </head>
-                <body class="bg-gray-100 min-h-screen flex items-center justify-center">
-                    <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
-                        <h1 class="text-2xl font-bold mb-4 text-center">Maternity Benefit</h1>
-                        <p class="text-lg text-center text-green-600 font-bold">BDT ${maternityBenefit.toFixed(2)}</p>
-                        <div class="flex justify-center space-x-4 mt-4 no-print">
-                            <button onclick="window.print()" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Print</button>
-                            <a href="javascript:window.close()" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">Close</a>
-                        </div>
-                    </div>
-                </body>
-                </html>
-            `);
-        });
+    // Calculate maternity benefit for 60 days
+    const maternityBenefit = avgDailyIncome * 60;
+
+    // Total payable
+    const totalPayable = maternityBenefit;
+
+    // Convert total payable to words (basic conversion logic)
+    const numberToWords = (num) => {
+        const a = [
+            '', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 
+            'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 
+            'eighteen', 'nineteen'
+        ];
+        const b = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+        const g = ['', 'thousand', 'million', 'billion'];
+
+        if (num === 0) return 'zero';
+
+        let str = '';
+        let i = 0;
+
+        while (num > 0) {
+            const chunk = num % 1000;
+            if (chunk > 0) {
+                let chunkStr = '';
+                const hundreds = Math.floor(chunk / 100);
+                if (hundreds > 0) {
+                    chunkStr += a[hundreds] + ' hundred ';
+                }
+                const remainder = chunk % 100;
+                if (remainder < 20) {
+                    chunkStr += a[remainder] + ' ';
+                } else {
+                    chunkStr += b[Math.floor(remainder / 10)] + ' ';
+                    chunkStr += a[remainder % 10] + ' ';
+                }
+                str = chunkStr + g[i] + ' ' + str;
+            }
+            num = Math.floor(num / 1000);
+            i++;
+        }
+        return str.trim();
+    };
+
+    // Update results in form
+    document.getElementById('avgDailyIncome').value = avgDailyIncome.toFixed(2);
+    document.getElementById('maternityBenefit').value = maternityBenefit.toFixed(2);
+    document.getElementById('totalPayable').value = totalPayable.toFixed(2);
+    document.getElementById('totalPayableInWords').value = numberToWords(Math.floor(totalPayable));
+});
+
     </script>
 </body>
 </html>
