@@ -1,11 +1,9 @@
-<!-- index.html -->
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maternity Benefit Calculator</title>
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
     <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
@@ -21,65 +19,41 @@
             </div>
             <button type="button" id="calculateButton" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">Calculate</button>
         </form>
-    </div>
-    <script src="script.js"></script>
+    </div><script>
+    document.getElementById('calculateButton').addEventListener('click', function() {
+        // Get input values
+        const monthlySalary = parseFloat(document.getElementById('monthlySalary').value) || 0;
+        const allowances = parseFloat(document.getElementById('allowances').value) || 0;
+
+        // Calculate average daily wage
+        const totalMonthlyWage = monthlySalary + allowances;
+        const averageDailyWage = totalMonthlyWage / 30;
+
+        // Calculate maternity benefit
+        const maternityBenefit = averageDailyWage * 120;
+
+        // Open new window to display result
+        const resultWindow = window.open('', '_blank', 'width=400,height=300');
+        resultWindow.document.write(`
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Maternity Benefit Result</title>
+                <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+            </head>
+            <body class="bg-gray-100 min-h-screen flex items-center justify-center">
+                <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
+                    <h1 class="text-2xl font-bold mb-4 text-center">Maternity Benefit</h1>
+                    <p class="text-lg text-center text-green-600 font-bold">BDT ${maternityBenefit.toFixed(2)}</p>
+                    <a href="javascript:window.close()" class="block mt-4 text-center text-blue-500 hover:underline">Close</a>
+                </div>
+            </body>
+            </html>
+        `);
+    });
+</script>
+
 </body>
 </html>
-
-/* styles.css */
-body {
-    background-color: #f3f4f6;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-}
-.bg-white {
-    background-color: #ffffff;
-}
-.shadow-lg {
-    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
-}
-.rounded-lg {
-    border-radius: 1rem;
-}
-
-/* Add Tailwind utility classes if required */
-
-/* script.js */
-document.getElementById('calculateButton').addEventListener('click', function() {
-    const monthlySalary = parseFloat(document.getElementById('monthlySalary').value) || 0;
-    const allowances = parseFloat(document.getElementById('allowances').value) || 0;
-
-    const totalMonthlyWage = monthlySalary + allowances;
-    const averageDailyWage = totalMonthlyWage / 30;
-    const maternityBenefit = averageDailyWage * 120;
-
-    const resultWindow = window.open('', '_blank', 'width=400,height=300');
-    resultWindow.document.write(`
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Maternity Benefit Result</title>
-            <link rel="stylesheet" href="styles.css">
-            <style>
-                @media print {
-                    .no-print { display: none; }
-                }
-            </style>
-        </head>
-        <body class="bg-gray-100 min-h-screen flex items-center justify-center">
-            <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
-                <h1 class="text-2xl font-bold mb-4 text-center">Maternity Benefit</h1>
-                <p class="text-lg text-center text-green-600 font-bold">BDT ${maternityBenefit.toFixed(2)}</p>
-                <div class="flex justify-center space-x-4 mt-4 no-print">
-                    <button onclick="window.print()" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Print</button>
-                    <a href="javascript:window.close()" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">Close</a>
-                </div>
-            </div>
-        </body>
-        </html>
-    `);
-});
