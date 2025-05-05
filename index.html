@@ -1,59 +1,115 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maternity Benefit Calculator</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Maternity Benefit Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
-    <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
-        <h1 class="text-2xl font-bold mb-4 text-center">Maternity Benefit Calculator</h1>
-        <form id="calculatorForm" class="space-y-4">
-            <div>
-                <label for="monthlySalary" class="block text-sm font-medium text-gray-700">Monthly Salary (BDT)</label>
-                <input type="number" id="monthlySalary" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="Enter monthly salary" required>
-            </div>
-            <div>
-                <label for="allowances" class="block text-sm font-medium text-gray-700">Monthly Allowances (BDT)</label>
-                <input type="number" id="allowances" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="Enter allowances (if any)">
-            </div>
-            <button type="button" id="calculateButton" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">Calculate</button>
-        </form>
-    </div><script>
-    document.getElementById('calculateButton').addEventListener('click', function() {
-        // Get input values
-        const monthlySalary = parseFloat(document.getElementById('monthlySalary').value) || 0;
-        const allowances = parseFloat(document.getElementById('allowances').value) || 0;
-
-        // Calculate average daily wage
-        const totalMonthlyWage = monthlySalary + allowances;
-        const averageDailyWage = totalMonthlyWage / 30;
-
-        // Calculate maternity benefit
-        const maternityBenefit = averageDailyWage * 120;
-
-        // Open new window to display result
-        const resultWindow = window.open('', '_blank', 'width=400,height=300');
-        resultWindow.document.write(`
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Maternity Benefit Result</title>
-                <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-            </head>
-            <body class="bg-gray-100 min-h-screen flex items-center justify-center">
-                <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
-                    <h1 class="text-2xl font-bold mb-4 text-center">Maternity Benefit</h1>
-                    <p class="text-lg text-center text-green-600 font-bold">BDT ${maternityBenefit.toFixed(2)}</p>
-                    <a href="javascript:window.close()" class="block mt-4 text-center text-blue-500 hover:underline">Close</a>
+    <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-4xl">
+        <h1 class="text-2xl font-bold mb-4 text-center">Maternity Benefit Form</h1>
+        <form id="maternityForm" class="space-y-6">
+            <!-- Employee Information -->
+            <fieldset class="border border-gray-300 rounded p-4">
+                <legend class="text-lg font-semibold">Employee Information</legend>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="employeeName" class="block text-sm font-medium text-gray-700">Name of Employee</label>
+                        <input type="text" id="employeeName" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                    </div>
+                    <div>
+                        <label for="employeeId" class="block text-sm font-medium text-gray-700">ID No.</label>
+                        <input type="text" id="employeeId" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                    </div>
+                    <div>
+                        <label for="cardNo" class="block text-sm font-medium text-gray-700">Card No.</label>
+                        <input type="text" id="cardNo" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="designation" class="block text-sm font-medium text-gray-700">Designation</label>
+                        <input type="text" id="designation" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+                        <input type="text" id="category" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="section" class="block text-sm font-medium text-gray-700">Section</label>
+                        <input type="text" id="section" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="dateOfJoining" class="block text-sm font-medium text-gray-700">Date of Joining</label>
+                        <input type="date" id="dateOfJoining" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="monthlySalary" class="block text-sm font-medium text-gray-700">Monthly Salary (BDT)</label>
+                        <input type="number" id="monthlySalary" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    </div>
                 </div>
-            </body>
-            </html>
-        `);
-    });
-</script>
+            </fieldset>
 
+            <!-- History of Maternity -->
+            <fieldset class="border border-gray-300 rounded p-4">
+                <legend class="text-lg font-semibold">History of Maternity</legend>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="dateOfSymptom" class="block text-sm font-medium text-gray-700">Date of Symptom</label>
+                        <input type="date" id="dateOfSymptom" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="estimatedDeliveryDate" class="block text-sm font-medium text-gray-700">Estimated Delivery Date</label>
+                        <input type="date" id="estimatedDeliveryDate" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="maternityLeaveStartDate" class="block text-sm font-medium text-gray-700">Maternity Leave Start Date</label>
+                        <input type="date" id="maternityLeaveStartDate" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="maternityLeaveEndDate" class="block text-sm font-medium text-gray-700">Maternity Leave End Date</label>
+                        <input type="date" id="maternityLeaveEndDate" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- History of Last Month's Take-Home Salary -->
+            <fieldset class="border border-gray-300 rounded p-4">
+                <legend class="text-lg font-semibold">Last Month's Take-Home Salary</legend>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="lastMonthSalary" class="block text-sm font-medium text-gray-700">Salary (BDT)</label>
+                        <input type="number" id="lastMonthSalary" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="bonus" class="block text-sm font-medium text-gray-700">Bonus (BDT)</label>
+                        <input type="number" id="bonus" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="others" class="block text-sm font-medium text-gray-700">Others (if any)</label>
+                        <input type="number" id="others" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="totalIncome" class="block text-sm font-medium text-gray-700">Total Income (BDT)</label>
+                        <input type="number" id="totalIncome" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" readonly>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Last Month's Attendance -->
+            <fieldset class="border border-gray-300 rounded p-4">
+                <legend class="text-lg font-semibold">Last Month's Attendance</legend>
+                <div>
+                    <label for="attendanceDays" class="block text-sm font-medium text-gray-700">Days of Attendance</label>
+                    <input type="number" id="attendanceDays" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                </div>
+            </fieldset>
+
+            <div class="flex justify-end">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
