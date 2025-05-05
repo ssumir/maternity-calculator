@@ -111,6 +111,16 @@
     </div>
 
     <script>
+      // Function to dynamically update Total Income
+        function calculateTotal() {
+            const salary = parseFloat(document.getElementById('lastMonthSalary').value) || 0;
+            const bonus = parseFloat(document.getElementById('bonus').value) || 0;
+            const others = parseFloat(document.getElementById('others').value) || 0;
+
+            const total = salary + bonus + others;
+            document.getElementById('totalIncome').value = total.toFixed(2);// Show result with 2 decimal points
+        }
+  
         function submitForm() {
             // Collect data
             const data = {
@@ -138,16 +148,6 @@
 
             // Open the result page
             window.open('result.html', '_blank');
-        }
-    </script>
-    <script>
-        function calculateTotal() {
-            const salary = parseFloat(document.getElementById('lastMonthSalary').value) || 0;
-            const bonus = parseFloat(document.getElementById('bonus').value) || 0;
-            const others = parseFloat(document.getElementById('others').value) || 0;
-
-            const total = salary + bonus + others;
-            document.getElementById('totalIncome').value = total.toFixed(2);
         }
     </script>
 </body>
