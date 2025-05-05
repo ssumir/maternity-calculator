@@ -8,7 +8,7 @@
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
     <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-4xl">
-        <h1 class="text-2xl font-bold mb-4 text-center">Maternity Benefit Form</h1>
+        <h1 class="text-2xl font-bold mb-6 text-center">Maternity Benefit Form</h1>
         <form id="maternityForm" class="space-y-6">
             <!-- Employee Information -->
             <fieldset class="border border-gray-300 rounded p-4">
@@ -16,11 +16,11 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label for="employeeName" class="block text-sm font-medium text-gray-700">Name of Employee</label>
-                        <input type="text" id="employeeName" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                        <input type="text" id="employeeName" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
                     </div>
                     <div>
                         <label for="employeeId" class="block text-sm font-medium text-gray-700">ID No.</label>
-                        <input type="text" id="employeeId" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                        <input type="text" id="employeeId" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
                     </div>
                     <div>
                         <label for="cardNo" class="block text-sm font-medium text-gray-700">Card No.</label>
@@ -74,7 +74,7 @@
 
             <!-- History of Last Month's Take-Home Salary -->
             <fieldset class="border border-gray-300 rounded p-4">
-                <legend class="text-lg font-semibold">Last Month's Take-Home Salary</legend>
+                <legend class="text-lg font-semibold">History of Last Month's Take-Home Salary</legend>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label for="lastMonthSalary" class="block text-sm font-medium text-gray-700">Salary (BDT)</label>
@@ -90,7 +90,7 @@
                     </div>
                     <div>
                         <label for="totalIncome" class="block text-sm font-medium text-gray-700">Total Income (BDT)</label>
-                        <input type="number" id="totalIncome" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" readonly>
+                        <input type="number" id="totalIncome" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
                     </div>
                 </div>
             </fieldset>
@@ -104,12 +104,41 @@
                 </div>
             </fieldset>
 
-            <div class="flex justify-end">
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Submit</button>
+            <div class="flex justify-end mt-6">
+                <button type="button" onclick="submitForm()" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Submit</button>
             </div>
         </form>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        function submitForm() {
+            // Collect data
+            const data = {
+                employeeName: document.getElementById('employeeName').value,
+                employeeId: document.getElementById('employeeId').value,
+                cardNo: document.getElementById('cardNo').value,
+                designation: document.getElementById('designation').value,
+                category: document.getElementById('category').value,
+                section: document.getElementById('section').value,
+                dateOfJoining: document.getElementById('dateOfJoining').value,
+                monthlySalary: document.getElementById('monthlySalary').value,
+                dateOfSymptom: document.getElementById('dateOfSymptom').value,
+                estimatedDeliveryDate: document.getElementById('estimatedDeliveryDate').value,
+                maternityLeaveStartDate: document.getElementById('maternityLeaveStartDate').value,
+                maternityLeaveEndDate: document.getElementById('maternityLeaveEndDate').value,
+                lastMonthSalary: document.getElementById('lastMonthSalary').value,
+                bonus: document.getElementById('bonus').value,
+                others: document.getElementById('others').value,
+                totalIncome: document.getElementById('totalIncome').value,
+                attendanceDays: document.getElementById('attendanceDays').value,
+            };
+
+            // Store data in localStorage
+            localStorage.setItem('formData', JSON.stringify(data));
+
+            // Open the result page
+            window.open('result.html', '_blank');
+        }
+    </script>
 </body>
 </html>
