@@ -10,57 +10,82 @@
     <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-4xl">
         <h1 class="text-2xl font-bold mb-6 text-center">Maternity Benefit Result</h1>
         
-        <div class="space-y-6">
-            <!-- Employee Information -->
-            <fieldset class="border border-gray-300 rounded p-4">
-                <legend class="text-lg font-semibold">Employee Information</legend>
-                <div class="grid grid-cols-2 gap-4">
-                    <div><strong>Name of Employee:</strong> <span id="resultEmployeeName"></span></div>
-                    <div><strong>ID No.:</strong> <span id="resultEmployeeId"></span></div>
-                    <div><strong>Card No.:</strong> <span id="resultCardNo"></span></div>
-                    <div><strong>Designation:</strong> <span id="resultDesignation"></span></div>
-                    <div><strong>Category:</strong> <span id="resultCategory"></span></div>
-                    <div><strong>Section:</strong> <span id="resultSection"></span></div>
-                    <div><strong>Date of Joining:</strong> <span id="resultDateOfJoining"></span></div>
-                    <div><strong>Monthly Salary (BDT):</strong> <span id="resultMonthlySalary"></span></div>
-                </div>
-            </fieldset>
-
-            <!-- History of Maternity -->
-            <fieldset class="border border-gray-300 rounded p-4">
-                <legend class="text-lg font-semibold">History of Maternity</legend>
-                <div class="grid grid-cols-2 gap-4">
-                    <div><strong>Date of Symptom:</strong> <span id="resultDateOfSymptom"></span></div>
-                    <div><strong>Estimated Delivery Date:</strong> <span id="resultEstimatedDeliveryDate"></span></div>
-                    <div><strong>Maternity Leave Start Date:</strong> <span id="resultMaternityLeaveStartDate"></span></div>
-                    <div><strong>Maternity Leave End Date:</strong> <span id="resultMaternityLeaveEndDate"></span></div>
-                </div>
-            </fieldset>
-
-            <!-- History of Last Month's Take-Home Salary -->
-            <fieldset class="border border-gray-300 rounded p-4">
-                <legend class="text-lg font-semibold">History of Last Month's Take-Home Salary</legend>
-                <div class="grid grid-cols-2 gap-4">
-                    <div><strong>Salary (BDT):</strong> <span id="resultLastMonthSalary"></span></div>
-                    <div><strong>Bonus (BDT):</strong> <span id="resultBonus"></span></div>
-                    <div><strong>Others (if any):</strong> <span id="resultOthers"></span></div>
-                    <div><strong>Total Income (BDT):</strong> <span id="resultTotalIncome"></span></div>
-                </div>
-            </fieldset>
-
-            <!-- Last Month's Attendance -->
-            <fieldset class="border border-gray-300 rounded p-4">
-                <legend class="text-lg font-semibold">Last Month's Attendance</legend>
-                <div>
-                    <strong>Days of Attendance:</strong> <span id="resultAttendanceDays"></span>
-                </div>
-            </fieldset>
-        </div>
+        <div id="resultContainer" class="space-y-6"></div>
 
         <div class="flex justify-end mt-6">
             <button onclick="window.close()" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 mr-4">Close</button>
             <button onclick="window.print()" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Print</button>
         </div>
     </div>
+
+    <script>
+        // Load data from localStorage
+        const formData = JSON.parse(localStorage.getItem('formData'));
+
+        if (formData) {
+            const container = document.getElementById('resultContainer');
+            
+            // Create sections for each fieldset
+            const sections = [
+                {
+                    title: "Employee Information",
+                    fields: [
+                        ["Name of Employee", formData.employeeName],
+                        ["ID No.", formData.employeeId],
+                        ["Card No.", formData.cardNo],
+                        ["Designation", formData.designation],
+                        ["Category", formData.category],
+                        ["Section", formData.section],
+                        ["Date of Joining", formData.dateOfJoining],
+                        ["Monthly Salary", formData.monthlySalary],
+                    ],
+                },
+                {
+                    title: "History of Maternity",
+                    fields: [
+                        ["Date of Symptom", formData.dateOfSymptom],
+                        ["Estimated Delivery Date", formData.estimatedDeliveryDate],
+                        ["Maternity Leave Start Date", formData.maternityLeaveStartDate],
+                        ["Maternity Leave End Date", formData.maternityLeaveEndDate],
+                    ],
+                },
+                {
+                    title: "History of Last Month's Take-Home Salary",
+                    fields: [
+                        ["Salary (BDT)", formData.lastMonthSalary],
+                        ["Bonus (BDT)", formData.bonus],
+                        ["Others (if any)", formData.others],
+                        ["Total Income (BDT)", formData.totalIncome],
+                    ],
+                },
+                {
+                    title: "Last Month's Attendance",
+                    fields: [["Days of Attendance", formData.attendanceDays]],
+                },
+            ];
+
+            // Generate HTML dynamically
+            sections.forEach(section => {
+                const fieldset = document.createElement('fieldset');
+                fieldset.className = "border border-gray-300 rounded p-4";
+
+                const legend = document.createElement('legend');
+                legend.className = "text-lg font-semibold";
+                legend.textContent = section.title;
+                fieldset.appendChild(legend);
+
+                const grid = document.createElement('div');
+                grid.className = "grid grid-cols-2 gap-4";
+                section.fields.forEach(([label, value]) => {
+                    const field = document.createElement('div');
+                    field.innerHTML = `<strong>${label}:</strong> ${value || "N/A"}`;
+                    grid.appendChild(field);
+                });
+
+                fieldset.appendChild(grid);
+                container.appendChild(fieldset);
+            });
+        }
+    </script>
 </body>
 </html>
