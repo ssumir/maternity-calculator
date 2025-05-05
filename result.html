@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Submitted Data</h1>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // Load data from localStorage
+        const employeeInfo = JSON.parse(localStorage.getItem('employeeInfo'));
+        const maternityHistory = JSON.parse(localStorage.getItem('maternityHistory'));
+        const takeHomeSalary = JSON.parse(localStorage.getItem('takeHomeSalary'));
+        const attendanceDays = localStorage.getItem('attendanceDays');
+
+        // Display the data
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = `
+            <h2>Employee Information</h2>
+            <p>${JSON.stringify(employeeInfo, null, 2)}</p>
+            <h2>History of Maternity</h2>
+            <p>${JSON.stringify(maternityHistory, null, 2)}</p>
+            <h2>Last Month's Take-Home Salary</h2>
+            <p>${JSON.stringify(takeHomeSalary, null, 2)}</p>
+            <h2>Last Month's Attendance</h2>
+            <p>${attendanceDays} days</p>
+        `;
+    </script>
+</body>
+</html>
