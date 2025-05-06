@@ -96,6 +96,68 @@
                         <label for="totalIncome" class="block text-sm font-medium text-gray-700">Total Income (BDT)</label>
                         <input type="number" id="totalIncome" readonly class="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-gray-100">
                     </div>
+                    <div>
+                        <label for="dailyAverage" class="block text-sm font-medium text-gray-700">Daily Average Amount of Taka</label>
+                        <input type="number" id="dailyAverage" readonly class="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-gray-100">
+                    </div>
+                </div>
+            </fieldset>
+            <!-- Details of Maternity Benefit -->
+            <fieldset class="border border-gray-300 rounded p-4">
+                <legend class="text-lg font-semibold">Details of Maternity Benefit</legend>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="installmentNo" class="block text-sm font-medium text-gray-700">Installment No.</label>
+                        <input type="number" id="installmentNo" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="eligibleDays" class="block text-sm font-medium text-gray-700">Eligible for how many days</label>
+                        <input type="number" id="eligibleDays" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="payableAmount" class="block text-sm font-medium text-gray-700">Payable amount (Taka)</label>
+                        <input type="number" id="payableAmount" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Current Month's Payable Salary -->
+            <fieldset class="border border-gray-300 rounded p-4">
+                <legend class="text-lg font-semibold">Current Month's Payable Salary</legend>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="currentAttendanceDays" class="block text-sm font-medium text-gray-700">Days of Attendance</label>
+                        <input type="number" id="currentAttendanceDays" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="currentSalary" class="block text-sm font-medium text-gray-700">Salary (BDT)</label>
+                        <input type="number" id="currentSalary" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="currentBonus" class="block text-sm font-medium text-gray-700">Bonus (BDT)</label>
+                        <input type="number" id="currentBonus" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="currentOthers" class="block text-sm font-medium text-gray-700">Others (if any)</label>
+                        <input type="number" id="currentOthers" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="currentTotalSalary" class="block text-sm font-medium text-gray-700">Total Salary (BDT)</label>
+                        <input type="number" id="currentTotalSalary" readonly class="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-gray-100">
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Total Payable Amount -->
+            <fieldset class="border border-gray-300 rounded p-4">
+                <legend class="text-lg font-semibold">Total Payable Amount</legend>
+                <div>
+                    <label for="payableAmountDigit" class="block text-sm font-medium text-gray-700">In Digit</label>
+                    <input type="number" id="payableAmountDigit" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                </div>
+                <div>
+                    <label for="payableAmountWord" class="block text-sm font-medium text-gray-700">In Word</label>
+                    <input type="text" id="payableAmountWord" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
                 </div>
             </fieldset>
             
@@ -114,6 +176,23 @@
             
             const totalIncome = salary + bonus + others;
             document.getElementById('totalIncome').value = totalIncome.toFixed(2); // Show result with 2 decimal points
+        }
+            // Function to dynamically update Current Month's Total Salary
+            function updateCurrentTotalSalary() {
+            const currentSalary = parseFloat(document.getElementById('currentSalary').value) || 0;
+            const currentBonus = parseFloat(document.getElementById('currentBonus').value) || 0;
+            const currentOthers = parseFloat(document.getElementById('currentOthers').value) || 0;
+            
+            const currentTotalSalary = currentSalary + currentBonus + currentOthers;
+            document.getElementById('currentTotalSalary').value = currentTotalSalary.toFixed(2); // Show result with 2 decimal points
+        }
+        // Function to calculate Daily Average Amount of Taka
+        function updateDailyAverage() {
+            const totalIncome = parseFloat(document.getElementById('totalIncome').value) || 0;
+            const attendanceDays = parseFloat(document.getElementById('attendanceDays').value) || 0;
+    
+            const dailyAverage = attendanceDays > 0 ? totalIncome / attendanceDays : 0;
+            document.getElementById('dailyAverage').value = dailyAverage.toFixed(2);
         }
   
         function submitForm() {
@@ -135,7 +214,18 @@
                 bonus: document.getElementById('bonus').value,
                 others: document.getElementById('others').value,
                 totalIncome: document.getElementById('totalIncome').value,
+                dailyAverage: document.getElementById('dailyAverage').value,
                 attendanceDays: document.getElementById('attendanceDays').value,
+                installmentNo: document.getElementById('installmentNo').value,
+                eligibleDays: document.getElementById('eligibleDays').value,
+                payableAmount: document.getElementById('payableAmount').value,
+                currentAttendanceDays: document.getElementById('currentAttendanceDays').value,
+                currentSalary: document.getElementById('currentSalary').value,
+                currentBonus: document.getElementById('currentBonus').value,
+                currentOthers: document.getElementById('currentOthers').value,
+                currentTotalSalary: document.getElementById('currentTotalSalary').value,
+                payableAmountDigit: document.getElementById('payableAmountDigit').value,
+                payableAmountWord: document.getElementById('payableAmountWord').value,
             };
 
             // Store data in localStorage
