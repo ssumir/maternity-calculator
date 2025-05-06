@@ -131,20 +131,21 @@
                     </div>
                     <div>
                         <label for="currentSalary" class="block text-sm font-medium text-gray-700">Salary (BDT)</label>
-                        <input type="number" id="currentSalary" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                        <input type="number" id="currentSalary" oninput="updateCurrentTotalSalary()" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
                     </div>
                     <div>
                         <label for="currentBonus" class="block text-sm font-medium text-gray-700">Bonus (BDT)</label>
-                        <input type="number" id="currentBonus" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                        <input type="number" id="currentBonus" oninput="updateCurrentTotalSalary()" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
                     </div>
                     <div>
                         <label for="currentOthers" class="block text-sm font-medium text-gray-700">Others (if any)</label>
-                        <input type="number" id="currentOthers" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                        <input type="number" id="currentOthers" oninput="updateCurrentTotalSalary()" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
                     </div>
                     <div>
                         <label for="currentTotalSalary" class="block text-sm font-medium text-gray-700">Total Salary (BDT)</label>
                         <input type="number" id="currentTotalSalary" readonly class="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-gray-100">
                     </div>
+
                 </div>
             </fieldset>
 
@@ -182,16 +183,16 @@
                 const dailyAverage = attendanceDays > 0 ? totalIncome / attendanceDays : 0;
                 document.getElementById('dailyAverage').value = dailyAverage.toFixed(2); // Display daily average with 2 decimal places
             }
-            // Function to dynamically update Current Month's Total Salary
             function updateCurrentTotalSalary() {
-            const currentSalary = parseFloat(document.getElementById('currentSalary').value) || 0;
-            const currentBonus = parseFloat(document.getElementById('currentBonus').value) || 0;
-            const currentOthers = parseFloat(document.getElementById('currentOthers').value) || 0;
+                const currentSalary = parseFloat(document.getElementById('currentSalary').value) || 0;
+                const currentBonus = parseFloat(document.getElementById('currentBonus').value) || 0;
+                const currentOthers = parseFloat(document.getElementById('currentOthers').value) || 0;
             
-            const currentTotalSalary = currentSalary + currentBonus + currentOthers;
-            document.getElementById('currentTotalSalary').value = currentTotalSalary.toFixed(2); // Show result with 2 decimal points
-        }
-        
+                // Calculate total salary
+                const currentTotalSalary = currentSalary + currentBonus + currentOthers;
+                document.getElementById('currentTotalSalary').value = currentTotalSalary.toFixed(2); // Display result with 2 decimal places
+            }
+
         function submitForm() {
             // Collect data
             const data = {
