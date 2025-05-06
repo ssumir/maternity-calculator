@@ -54,70 +54,63 @@
             // Define sections for displaying data
             const sections = [
                 {
-                    title: "Employee Information",
-                    fields: [
-                        ["Name of Employee", formData.employeeName],
-                        ["ID No.", formData.employeeId],
-                        ["Card No.", formData.cardNo],
-                        ["Designation", formData.designation],
-                        ["Category", formData.category],
-                        ["Section", formData.section],
-                        ["Date of Joining", formData.dateOfJoining],
-                        ["Monthly Salary", formatCurrency(formData.monthlySalary)],
-                    ],
-                },
-                {
-                    title: "History of Maternity",
-                    fields: [
-                        ["Date of Symptom", formData.dateOfSymptom],
-                        ["Estimated Delivery Date", formData.estimatedDeliveryDate],
-                        ["Actual Delivery Date", formData.actualDeliveryDate],
-                        ["Maternity Leave Start Date", formData.maternityLeaveStartDate],
-                        ["Maternity Leave End Date", formData.maternityLeaveEndDate],
-                        ["Number of Children Born", formData.numberOfChildren],
-                    ],
-                },
-                {
-                    title: "History of Last Month's Take-Home Salary",
-                    fields: [
-                        ["Salary (BDT)", formatCurrency(formData.lastMonthSalary)],
-                        ["Bonus (BDT)", formatCurrency(formData.bonus)],
-                        ["Others (if any)", formatCurrency(formData.others)],
-                        ["Deductions (BDT)", formatCurrency(formData.deductions)],
-                        ["Net Pay (BDT)", formatCurrency(formData.netPay)],
-                        ["Total Income (BDT)", formatCurrency(formData.totalIncome)],
-                    ],
-                },
-                {
-                    title: "Last Month's Attendance",
-                    fields: [
-                        ["Days of Attendance", formData.attendanceDays],
-                        ["Days Absent", formData.daysAbsent],
-                        ["Leaves Taken", formData.leavesTaken],
-                    ],
-                },
-                {
-                    title: "Details of Maternity Benefit",
-                    fields: [
-                        ["Eligible Amount (BDT)", formatCurrency(formData.eligibleMaternityAmount)],
-                        ["Benefit Duration (days)", formData.benefitDuration],
-                        ["Disbursed Amount (BDT)", formatCurrency(formData.disbursedAmount)],
-                    ],
-                },
-                {
-                    title: "Current Month's Payable Salary",
-                    fields: [
-                        ["Basic Salary (BDT)", formatCurrency(formData.currentBasicSalary)],
-                        ["Allowances (BDT)", formatCurrency(formData.allowances)],
-                        ["Total Payable (BDT)", formatCurrency(formData.totalCurrentPayable)],
-                    ],
-                },
-                {
-                    title: "Total Payable Amount",
-                    fields: [
-                        ["Total Payable Amount (BDT)", formatCurrency(formData.totalPayableAmount)],
-                    ],
-                },
+      "title": "Employee Information",
+      "fields": [
+        ["Name of Employee", "formData.employeeName"],
+        ["ID No.", "formData.employeeId"],
+        ["Card No.", "formData.cardNo"],
+        ["Designation", "formData.designation"],
+        ["Category", "formData.category"],
+        ["Section", "formData.section"],
+        ["Date of Joining", "formData.dateOfJoining"],
+        ["Monthly Salary (BDT)", "formData.monthlySalary"]
+      ]
+    },
+    {
+      "title": "Medical history & duration of maternity leave",
+      "fields": [
+        ["Date of Symptom", "formData.dateOfSymptom"],
+        ["Estimated Delivery Date", "formData.estimatedDeliveryDate"],
+        ["Maternity Leave Start Date", "formData.maternityLeaveStartDate"],
+        ["Maternity Leave End Date", "formData.maternityLeaveEndDate"]
+      ]
+    },
+    {
+      "title": "History of Last Month's Attendance & Take-Home Salary",
+      "fields": [
+        ["Days of Attendance", "formData.attendanceDays"],
+        ["Salary (BDT)", "formData.lastMonthSalary"],
+        ["Bonus (BDT)", "formData.bonus"],
+        ["Others (if any)", "formData.others"],
+        ["Total Income (BDT)", "formData.totalIncome"],
+        ["Daily Average Amount of Taka", "formData.dailyAverage"]
+      ]
+    },
+    {
+      "title": "Details of Maternity Benefit",
+      "fields": [
+        ["Installment No.", "formData.installmentNo"],
+        ["Eligible for how many days", "formData.eligibleDays"],
+        ["Payable Amount (Taka)", "formData.payableAmount"]
+      ]
+    },
+    {
+      "title": "Current Month's Payable Salary",
+      "fields": [
+        ["Days of Attendance", "formData.currentAttendanceDays"],
+        ["Salary (BDT)", "formData.currentSalary"],
+        ["Bonus (BDT)", "formData.currentBonus"],
+        ["Others (if any)", "formData.currentOthers"],
+        ["Total Salary (BDT)", "formData.currentTotalSalary"]
+      ]
+    },
+    {
+      "title": "Total Payable Amount",
+      "fields": [
+        ["In Digit (BDT)", "formData.totalPayableDigit"],
+        ["In Word", "formData.totalPayableWord"]
+      ]
+    },
             ];
 
             // Generate and append sections dynamically
