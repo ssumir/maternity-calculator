@@ -5,27 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maternity Benefit Result</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @media print {
+            button {
+                display: none;
+            }
+            body {
+                background-color: white;
+            }
+        }
+    </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
     <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-4xl">
         <h1 class="text-2xl font-bold mb-6 text-center">Maternity Benefit Result</h1>
         
-        <div id="resultContainer" class="space-y-6"></div>
+        <div id="resultContainer" class="space-y-6">
+            <!-- Dynamic content will be inserted here -->
+        </div>
 
         <div class="flex justify-end mt-6">
-            <button onclick="window.close()" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 mr-4">Close</button>
-            <button onclick="window.print()" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Print</button>
+            <button 
+                onclick="window.close()" 
+                class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 mr-4" 
+                aria-label="Close Window">
+                Close
+            </button>
+            <button 
+                onclick="window.print()" 
+                class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600" 
+                aria-label="Print Document">
+                Print
+            </button>
         </div>
     </div>
 
     <script>
+        // Utility function to format currency
+        const formatCurrency = value => 
+            new Intl.NumberFormat('en-BD', { style: 'currency', currency: 'BDT' }).format(value);
+
         // Load data from localStorage
-        const formData = JSON.parse(localStorage.getItem('formData'));
+        const formData = JSON.parse(localStorage.getItem('formData')) || null;
+
+        const container = document.getElementById('resultContainer');
 
         if (formData) {
-            const container = document.getElementById('resultContainer');
-            
-            // Create sections for each fieldset
+            // Define sections for displaying data
             const sections = [
                 {
                     title: "Employee Information",
@@ -37,7 +63,7 @@
                         ["Category", formData.category],
                         ["Section", formData.section],
                         ["Date of Joining", formData.dateOfJoining],
-                        ["Monthly Salary", formData.monthlySalary],
+                        ["Monthly Salary", formatCurrency(formData.monthlySalary)],
                     ],
                 },
                 {
@@ -45,26 +71,56 @@
                     fields: [
                         ["Date of Symptom", formData.dateOfSymptom],
                         ["Estimated Delivery Date", formData.estimatedDeliveryDate],
+                        ["Actual Delivery Date", formData.actualDeliveryDate],
                         ["Maternity Leave Start Date", formData.maternityLeaveStartDate],
                         ["Maternity Leave End Date", formData.maternityLeaveEndDate],
+                        ["Number of Children Born", formData.numberOfChildren],
                     ],
                 },
                 {
                     title: "History of Last Month's Take-Home Salary",
                     fields: [
-                        ["Salary (BDT)", formData.lastMonthSalary],
-                        ["Bonus (BDT)", formData.bonus],
-                        ["Others (if any)", formData.others],
-                        ["Total Income (BDT)", formData.totalIncome],
+                        ["Salary (BDT)", formatCurrency(formData.lastMonthSalary)],
+                        ["Bonus (BDT)", formatCurrency(formData.bonus)],
+                        ["Others (if any)", formatCurrency(formData.others)],
+                        ["Deductions (BDT)", formatCurrency(formData.deductions)],
+                        ["Net Pay (BDT)", formatCurrency(formData.netPay)],
+                        ["Total Income (BDT)", formatCurrency(formData.totalIncome)],
                     ],
                 },
                 {
                     title: "Last Month's Attendance",
-                    fields: [["Days of Attendance", formData.attendanceDays]],
+                    fields: [
+                        ["Days of Attendance", formData.attendanceDays],
+                        ["Days Absent", formData.daysAbsent],
+                        ["Leaves Taken", formData.leavesTaken],
+                    ],
+                },
+                {
+                    title: "Details of Maternity Benefit",
+                    fields: [
+                        ["Eligible Amount (BDT)", formatCurrency(formData.eligibleMaternityAmount)],
+                        ["Benefit Duration (days)", formData.benefitDuration],
+                        ["Disbursed Amount (BDT)", formatCurrency(formData.disbursedAmount)],
+                    ],
+                },
+                {
+                    title: "Current Month's Payable Salary",
+                    fields: [
+                        ["Basic Salary (BDT)", formatCurrency(formData.currentBasicSalary)],
+                        ["Allowances (BDT)", formatCurrency(formData.allowances)],
+                        ["Total Payable (BDT)", formatCurrency(formData.totalCurrentPayable)],
+                    ],
+                },
+                {
+                    title: "Total Payable Amount",
+                    fields: [
+                        ["Total Payable Amount (BDT)", formatCurrency(formData.totalPayableAmount)],
+                    ],
                 },
             ];
 
-            // Generate HTML dynamically
+            // Generate and append sections dynamically
             sections.forEach(section => {
                 const fieldset = document.createElement('fieldset');
                 fieldset.className = "border border-gray-300 rounded p-4";
@@ -85,6 +141,11 @@
                 fieldset.appendChild(grid);
                 container.appendChild(fieldset);
             });
+        } else {
+            // Handle case where no data is available
+            container.innerHTML = `
+                <p class="text-red-500 text-center">No data available. Please fill out the form first.</p>
+            `;
         }
     </script>
 </body>
