@@ -13,11 +13,33 @@
             body {
                 background-color: white;
             }
+            .footer {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                text-align: center;
+                background-color: white;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
-    <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-4xl">
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+    <!-- Header Section -->
+    <header class="bg-blue-500 text-white py-4">
+        <div class="container mx-auto flex justify-between items-center px-6">
+            <div class="flex items-center space-x-4">
+                <img src="logo.png" alt="Company Logo" class="h-10">
+                <h1 class="text-xl font-bold">Company Name</h1>
+            </div>
+            <div class="text-right">
+                <p class="text-sm">Date: <span id="currentDate"></span></p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow bg-white shadow-lg rounded-lg p-6 w-full max-w-4xl mx-auto mt-4">
         <h1 class="text-2xl font-bold mb-6 text-center">Maternity Benefit Result</h1>
         
         <div id="resultContainer" class="space-y-6">
@@ -38,109 +60,125 @@
                 Print
             </button>
         </div>
-    </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer bg-gray-800 text-white py-4">
+        <div class="text-center text-sm">
+            <p>Confidential Document - For Internal Use Only</p>
+            <p>Contact: support@company.com | Phone: +880-1234-567890</p>
+        </div>
+    </footer>
 
     <script>
-    // Utility function to format currency
-    const formatCurrency = value =>
-        new Intl.NumberFormat('en-BD', { style: 'currency', currency: 'BDT' }).format(value);
+        // Utility function to format currency
+        const formatCurrency = value =>
+            new Intl.NumberFormat('en-BD', { style: 'currency', currency: 'BDT' }).format(value);
 
-    // Load data from localStorage
-    const formData = JSON.parse(localStorage.getItem('formData')) || null;
+        // Load data from localStorage
+        const formData = JSON.parse(localStorage.getItem('formData')) || null;
 
-    const container = document.getElementById('resultContainer');
+        const container = document.getElementById('resultContainer');
+        const currentDate = document.getElementById('currentDate');
 
-    if (formData) {
-        // Define sections for displaying data
-        const sections = [
-            {
-                title: "Employee Information",
-                fields: [
-                    ["Name of Employee", formData.employeeName],
-                    ["ID No.", formData.employeeId],
-                    ["Card No.", formData.cardNo],
-                    ["Designation", formData.designation],
-                    ["Category", formData.category],
-                    ["Section", formData.section],
-                    ["Date of Joining", formData.dateOfJoining],
-                    ["Monthly Salary (BDT)", formatCurrency(formData.monthlySalary) || "N/A"]
-                ]
-            },
-            {
-                title: "Medical history & duration of maternity leave",
-                fields: [
-                    ["Date of Symptom", formData.dateOfSymptom],
-                    ["Estimated Delivery Date", formData.estimatedDeliveryDate],
-                    ["Maternity Leave Start Date", formData.maternityLeaveStartDate],
-                    ["Maternity Leave End Date", formData.maternityLeaveEndDate]
-                ]
-            },
-            {
-                title: "History of Last Month's Attendance & Take-Home Salary",
-                fields: [
-                    ["Days of Attendance", formData.attendanceDays],
-                    ["Salary (BDT)", formatCurrency(formData.lastMonthSalary)],
-                    ["Bonus (BDT)", formatCurrency(formData.bonus)],
-                    ["Others (if any)", formatCurrency(formData.others)],
-                    ["Total Income (BDT)", formatCurrency(formData.totalIncome)],
-                    ["Daily Average Amount of Taka", formatCurrency(formData.dailyAverage)]
-                ]
-            },
-            {
-                title: "Details of Maternity Benefit",
-                fields: [
-                    ["Installment No.", formData.installmentNo],
-                    ["Eligible for how many days", formData.eligibleDays],
-                    ["Payable Amount (Taka)", formatCurrency(formData.payableAmount)]
-                ]
-            },
-            {
-                title: "Current Month's Payable Salary",
-                fields: [
-                    ["Days of Attendance", formData.currentAttendanceDays],
-                    ["Salary (BDT)", formatCurrency(formData.currentSalary)],
-                    ["Bonus (BDT)", formatCurrency(formData.currentBonus)],
-                    ["Others (if any)", formatCurrency(formData.currentOthers)],
-                    ["Total Salary (BDT)", formatCurrency(formData.currentTotalSalary)]
-                ]
-            },
-            {
-                title: "Total Payable Amount",
-                fields: [
-                    ["In Digit (BDT)", formatCurrency(formData.totalPayableDigit)],
-                    ["In Word", formData.totalPayableWord || "N/A"]
-                ]
-            }
-        ];
-
-        // Generate and append sections dynamically
-        sections.forEach(section => {
-            const fieldset = document.createElement('fieldset');
-            fieldset.className = "border border-gray-300 rounded p-4";
-
-            const legend = document.createElement('legend');
-            legend.className = "text-lg font-semibold";
-            legend.textContent = section.title;
-            fieldset.appendChild(legend);
-
-            const grid = document.createElement('div');
-            grid.className = "grid grid-cols-2 gap-4";
-            section.fields.forEach(([label, value]) => {
-                const field = document.createElement('div');
-                field.innerHTML = `<strong>${label}:</strong> ${value || "N/A"}`;
-                grid.appendChild(field);
-            });
-
-            fieldset.appendChild(grid);
-            container.appendChild(fieldset);
+        // Display current date
+        currentDate.textContent = new Date().toLocaleDateString('en-BD', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
         });
-    } else {
-        // Handle case where no data is available
-        container.innerHTML = `
-            <p class="text-red-500 text-center">No data available. Please fill out the form first.</p>
-        `;
-    }
-</script>
+
+        if (formData) {
+            // Define sections for displaying data
+            const sections = [
+                {
+                    title: "Employee Information",
+                    fields: [
+                        ["Name of Employee", formData.employeeName],
+                        ["ID No.", formData.employeeId],
+                        ["Card No.", formData.cardNo],
+                        ["Designation", formData.designation],
+                        ["Category", formData.category],
+                        ["Section", formData.section],
+                        ["Date of Joining", formData.dateOfJoining],
+                        ["Monthly Salary (BDT)", formatCurrency(formData.monthlySalary) || "N/A"]
+                    ]
+                },
+                {
+                    title: "Medical history & duration of maternity leave",
+                    fields: [
+                        ["Date of Symptom", formData.dateOfSymptom],
+                        ["Estimated Delivery Date", formData.estimatedDeliveryDate],
+                        ["Maternity Leave Start Date", formData.maternityLeaveStartDate],
+                        ["Maternity Leave End Date", formData.maternityLeaveEndDate]
+                    ]
+                },
+                {
+                    title: "History of Last Month's Attendance & Take-Home Salary",
+                    fields: [
+                        ["Days of Attendance", formData.attendanceDays],
+                        ["Salary (BDT)", formatCurrency(formData.lastMonthSalary)],
+                        ["Bonus (BDT)", formatCurrency(formData.bonus)],
+                        ["Others (if any)", formatCurrency(formData.others)],
+                        ["Total Income (BDT)", formatCurrency(formData.totalIncome)],
+                        ["Daily Average Amount of Taka", formatCurrency(formData.dailyAverage)]
+                    ]
+                },
+                {
+                    title: "Details of Maternity Benefit",
+                    fields: [
+                        ["Installment No.", formData.installmentNo],
+                        ["Eligible for how many days", formData.eligibleDays],
+                        ["Payable Amount (Taka)", formatCurrency(formData.payableAmount)]
+                    ]
+                },
+                {
+                    title: "Current Month's Payable Salary",
+                    fields: [
+                        ["Days of Attendance", formData.currentAttendanceDays],
+                        ["Salary (BDT)", formatCurrency(formData.currentSalary)],
+                        ["Bonus (BDT)", formatCurrency(formData.currentBonus)],
+                        ["Others (if any)", formatCurrency(formData.currentOthers)],
+                        ["Total Salary (BDT)", formatCurrency(formData.currentTotalSalary)]
+                    ]
+                },
+                {
+                    title: "Total Payable Amount",
+                    fields: [
+                        ["In Digit (BDT)", formatCurrency(formData.totalPayableDigit)],
+                        ["In Word", formData.totalPayableWord || "N/A"]
+                    ]
+                }
+            ];
+
+            // Generate and append sections dynamically
+            sections.forEach(section => {
+                const fieldset = document.createElement('fieldset');
+                fieldset.className = "border border-gray-300 rounded p-4";
+
+                const legend = document.createElement('legend');
+                legend.className = "text-lg font-semibold";
+                legend.textContent = section.title;
+                fieldset.appendChild(legend);
+
+                const grid = document.createElement('div');
+                grid.className = "grid grid-cols-2 gap-4";
+                section.fields.forEach(([label, value]) => {
+                    const field = document.createElement('div');
+                    field.innerHTML = `<strong>${label}:</strong> ${value || "N/A"}`;
+                    grid.appendChild(field);
+                });
+
+                fieldset.appendChild(grid);
+                container.appendChild(fieldset);
+            });
+        } else {
+            // Handle case where no data is available
+            container.innerHTML = `
+                <p class="text-red-500 text-center">No data available. Please fill out the form first.</p>
+            `;
+        }
+    </script>
 
 </body>
 </html>
