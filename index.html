@@ -151,15 +151,18 @@
             <!-- Total Payable Amount -->
             <fieldset class="border border-gray-300 rounded p-4">
                 <legend class="text-lg font-semibold">Total Payable Amount</legend>
-                <div>
-                    <label for="payableAmountDigit" class="block text-sm font-medium text-gray-700">In Digit</label>
-                    <input type="number" id="payableAmountDigit" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
-                </div>
-                <div>
-                    <label for="payableAmountWord" class="block text-sm font-medium text-gray-700">In Word</label>
-                    <input type="text" id="payableAmountWord" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="totalPayableDigit" class="block text-sm font-medium text-gray-700">In Digit (BDT)</label>
+                        <input type="number" id="totalPayableDigit" readonly class="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-gray-100">
+                    </div>
+                    <div>
+                        <label for="totalPayableWord" class="block text-sm font-medium text-gray-700">In Word</label>
+                        <input type="text" id="totalPayableWord" readonly class="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-gray-100">
+                    </div>
                 </div>
             </fieldset>
+
             
             <div class="flex justify-end mt-6">
                 <button type="button" onclick="submitForm()" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Submit</button>
@@ -203,7 +206,64 @@
             
                 // Update the Payable Amount field
                 document.getElementById('payableAmount').value = payableAmount.toFixed(2); // Display result with 2 decimal places
-            }    
+            } 
+        function updateTotalPayableAmount() {
+            // Get the Payable Amount (Taka) from Details of Maternity Benefit
+            const payableAmount = parseFloat(document.getElementById('payableAmount').value) || 0;
+        
+            // Get the Total Salary (BDT) from Current Month's Payable Salary
+            const currentTotalSalary = parseFloat(document.getElementById('currentTotalSalary').value) || 0;
+        
+            // Calculate the Total Payable Amount
+            const totalPayableAmount = payableAmount + currentTotalSalary;
+        
+            // Update the Total Payable Amount fields
+            document.getElementById('totalPayableDigit').value = totalPayableAmount.toFixed(2); // Numeric
+            document.getElementById('totalPayableWord').value = convertNumberToWords(totalPayableAmount); // In Words
+        }
+
+        // Function to convert numbers to words
+        function convertNumberToWords(num) {
+            const a = [
+                "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+                "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"
+            ];
+            const b = [
+                "", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"
+            ];
+            const unit = ["", "thousand", "lakh", "crore"];
+        
+            if (num === 0) return "zero";
+        
+            const words = [];
+            let u = 0;
+        
+            while (num > 0) {
+                const chunk = num % 1000;
+                if (chunk !== 0) {
+                    const chunkWords = [];
+                    const hundreds = Math.floor(chunk / 100);
+                    const remainder = chunk % 100;
+        
+                    if (hundreds > 0) chunkWords.push(a[hundreds] + " hundred");
+                    if (remainder > 0) {
+                        if (remainder < 20) chunkWords.push(a[remainder]);
+                        else {
+                            const tens = Math.floor(remainder / 10);
+                            const units = remainder % 10;
+                            chunkWords.push(b[tens] + (units > 0 ? " " + a[units] : ""));
+                        }
+                    }
+        
+                    words.unshift(chunkWords.join(" ") + " " + unit[u]);
+                }
+                u++;
+                num = Math.floor(num / 1000);
+            }
+        
+            return words.join(" ").trim();
+        }
+
 
 
         function submitForm() {
