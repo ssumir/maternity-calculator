@@ -172,66 +172,79 @@
 
     <script>
             function updateTotalIncome() {
-                const salary = parseFloat(document.getElementById('lastMonthSalary').value) || 0;
-                const bonus = parseFloat(document.getElementById('bonus').value) || 0;
-                const others = parseFloat(document.getElementById('others').value) || 0;
-                const attendanceDays = parseInt(document.getElementById('attendanceDays').value) || 0;
-            
-                // Calculate total income
-                const totalIncome = salary + bonus + others;
-                document.getElementById('totalIncome').value = totalIncome.toFixed(2); // Display total income with 2 decimal places
-            
-                // Calculate daily average amount if attendance days are greater than 0
-                const dailyAverage = attendanceDays > 0 ? totalIncome / attendanceDays : 0;
-                document.getElementById('dailyAverage').value = dailyAverage.toFixed(2); // Display daily average with 2 decimal places
-            }
-            function updateCurrentTotalSalary() {
-                const currentSalary = parseFloat(document.getElementById('currentSalary').value) || 0;
-                const currentBonus = parseFloat(document.getElementById('currentBonus').value) || 0;
-                const currentOthers = parseFloat(document.getElementById('currentOthers').value) || 0;
-            
-                // Calculate total salary
-                const currentTotalSalary = currentSalary + currentBonus + currentOthers;
-                document.getElementById('currentTotalSalary').value = currentTotalSalary.toFixed(2); // Display result with 2 decimal places
-            }
-            function updatePayableAmount() {
-                // Get the Daily Average Amount of Taka
-                const dailyAverage = parseFloat(document.getElementById('dailyAverage').value) || 0;
-            
-                // Get the number of Eligible Days
-                const eligibleDays = parseFloat(document.getElementById('eligibleDays').value) || 0;
-            
-                // Calculate the Payable Amount
-                const payableAmount = dailyAverage * eligibleDays;
-            
-                // Update the Payable Amount field
-                document.getElementById('payableAmount').value = payableAmount.toFixed(2); // Display result with 2 decimal places
-            } 
-        function updateTotalPayableAmount() {
-            // Get the Payable Amount (Taka) from Details of Maternity Benefit
-            const payableAmount = parseFloat(document.getElementById('payableAmount').value) || 0;
-        
-            // Get the Total Salary (BDT) from Current Month's Payable Salary
-            const currentTotalSalary = parseFloat(document.getElementById('currentTotalSalary').value) || 0;
-        
-            // Calculate the Total Payable Amount
-            const totalPayableAmount = payableAmount + currentTotalSalary;
-        
-            // Update the Total Payable Amount fields
-            document.getElementById('totalPayableDigit').value = totalPayableAmount.toFixed(2); // Numeric
-            document.getElementById('totalPayableWord').value = convertNumberToWords(totalPayableAmount); // In Words
-        }
+    const salary = parseFloat(document.getElementById('lastMonthSalary').value) || 0;
+    const bonus = parseFloat(document.getElementById('bonus').value) || 0;
+    const others = parseFloat(document.getElementById('others').value) || 0;
+    const attendanceDays = parseInt(document.getElementById('attendanceDays').value) || 0;
 
-        // Number to Words Conversion
-        function convertNumberToWords(num) {
-            // (Conversion logic here as in the previous example)
-        }
-        
-        // Add Event Listeners After DOM Loads
-        document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('payableAmount').addEventListener('input', updateTotalPayableAmount);
-            document.getElementById('currentTotalSalary').addEventListener('input', updateTotalPayableAmount);
-        });
+    // Calculate total income
+    const totalIncome = salary + bonus + others;
+    document.getElementById('totalIncome').value = totalIncome.toFixed(2);
+
+    // Calculate daily average
+    const dailyAverage = attendanceDays > 0 ? totalIncome / attendanceDays : 0;
+    document.getElementById('dailyAverage').value = dailyAverage.toFixed(2);
+
+    // Update payable amount based on new daily average
+    updatePayableAmount();
+}
+
+function updateCurrentTotalSalary() {
+    const currentSalary = parseFloat(document.getElementById('currentSalary').value) || 0;
+    const currentBonus = parseFloat(document.getElementById('currentBonus').value) || 0;
+    const currentOthers = parseFloat(document.getElementById('currentOthers').value) || 0;
+
+    // Calculate total salary
+    const currentTotalSalary = currentSalary + currentBonus + currentOthers;
+    document.getElementById('currentTotalSalary').value = currentTotalSalary.toFixed(2);
+
+    // Update total payable amount based on new current salary
+    updateTotalPayableAmount();
+}
+
+function updatePayableAmount() {
+    const dailyAverage = parseFloat(document.getElementById('dailyAverage').value) || 0;
+    const eligibleDays = parseInt(document.getElementById('eligibleDays').value) || 0;
+
+    // Calculate payable amount
+    const payableAmount = dailyAverage * eligibleDays;
+    document.getElementById('payableAmount').value = payableAmount.toFixed(2);
+
+    // Update total payable amount based on new payable amount
+    updateTotalPayableAmount();
+}
+
+function updateTotalPayableAmount() {
+    const payableAmount = parseFloat(document.getElementById('payableAmount').value) || 0;
+    const currentTotalSalary = parseFloat(document.getElementById('currentTotalSalary').value) || 0;
+
+    // Calculate total payable amount
+    const totalPayableAmount = payableAmount + currentTotalSalary;
+
+    // Update fields
+    document.getElementById('totalPayableDigit').value = totalPayableAmount.toFixed(2);
+    document.getElementById('totalPayableWord').value = convertNumberToWords(totalPayableAmount);
+}
+
+// Utility function for converting numbers to words
+function convertNumberToWords(num) {
+    // Add number-to-words conversion logic (already in your script).
+}
+
+// Event Listeners
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('lastMonthSalary').addEventListener('input', updateTotalIncome);
+    document.getElementById('bonus').addEventListener('input', updateTotalIncome);
+    document.getElementById('others').addEventListener('input', updateTotalIncome);
+    document.getElementById('attendanceDays').addEventListener('input', updateTotalIncome);
+
+    document.getElementById('eligibleDays').addEventListener('input', updatePayableAmount);
+
+    document.getElementById('currentSalary').addEventListener('input', updateCurrentTotalSalary);
+    document.getElementById('currentBonus').addEventListener('input', updateCurrentTotalSalary);
+    document.getElementById('currentOthers').addEventListener('input', updateCurrentTotalSalary);
+});
+
 
         // Function to convert numbers to words
         function convertNumberToWords(num) {
