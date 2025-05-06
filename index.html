@@ -168,15 +168,20 @@
     </div>
 
     <script>
-      // Function to dynamically update Total Income
-        function updateTotalIncome() {
-            const salary = parseFloat(document.getElementById('lastMonthSalary').value) || 0;
-            const bonus = parseFloat(document.getElementById('bonus').value) || 0;
-            const others = parseFloat(document.getElementById('others').value) || 0;
+            function updateTotalIncome() {
+                const salary = parseFloat(document.getElementById('lastMonthSalary').value) || 0;
+                const bonus = parseFloat(document.getElementById('bonus').value) || 0;
+                const others = parseFloat(document.getElementById('others').value) || 0;
+                const attendanceDays = parseInt(document.getElementById('attendanceDays').value) || 0;
             
-            const totalIncome = salary + bonus + others;
-            document.getElementById('totalIncome').value = totalIncome.toFixed(2); // Show result with 2 decimal points
-        }
+                // Calculate total income
+                const totalIncome = salary + bonus + others;
+                document.getElementById('totalIncome').value = totalIncome.toFixed(2); // Display total income with 2 decimal places
+            
+                // Calculate daily average amount if attendance days are greater than 0
+                const dailyAverage = attendanceDays > 0 ? totalIncome / attendanceDays : 0;
+                document.getElementById('dailyAverage').value = dailyAverage.toFixed(2); // Display daily average with 2 decimal places
+            }
             // Function to dynamically update Current Month's Total Salary
             function updateCurrentTotalSalary() {
             const currentSalary = parseFloat(document.getElementById('currentSalary').value) || 0;
@@ -186,15 +191,7 @@
             const currentTotalSalary = currentSalary + currentBonus + currentOthers;
             document.getElementById('currentTotalSalary').value = currentTotalSalary.toFixed(2); // Show result with 2 decimal points
         }
-        // Function to calculate Daily Average Amount of Taka
-        function updateDailyAverage() {
-            const totalIncome = parseFloat(document.getElementById('totalIncome').value) || 0;
-            const attendanceDays = parseFloat(document.getElementById('attendanceDays').value) || 0;
-    
-            const dailyAverage = attendanceDays > 0 ? totalIncome / attendanceDays : 0;
-            document.getElementById('dailyAverage').value = dailyAverage.toFixed(2);
-        }
-  
+        
         function submitForm() {
             // Collect data
             const data = {
