@@ -112,15 +112,14 @@
                     </div>
                     <div>
                         <label for="eligibleDays" class="block text-sm font-medium text-gray-700">Eligible for how many days</label>
-                        <input type="number" id="eligibleDays" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                        <input type="number" id="eligibleDays" oninput="updatePayableAmount()" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
                     </div>
                     <div>
-                        <label for="payableAmount" class="block text-sm font-medium text-gray-700">Payable amount (Taka)</label>
-                        <input type="number" id="payableAmount" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                        <label for="payableAmount" class="block text-sm font-medium text-gray-700">Payable Amount (Taka)</label>
+                        <input type="number" id="payableAmount" readonly class="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-gray-100">
                     </div>
                 </div>
             </fieldset>
-
             <!-- Current Month's Payable Salary -->
             <fieldset class="border border-gray-300 rounded p-4">
                 <legend class="text-lg font-semibold">Current Month's Payable Salary</legend>
@@ -192,6 +191,20 @@
                 const currentTotalSalary = currentSalary + currentBonus + currentOthers;
                 document.getElementById('currentTotalSalary').value = currentTotalSalary.toFixed(2); // Display result with 2 decimal places
             }
+            function updatePayableAmount() {
+                // Get the Daily Average Amount of Taka
+                const dailyAverage = parseFloat(document.getElementById('dailyAverage').value) || 0;
+            
+                // Get the number of Eligible Days
+                const eligibleDays = parseFloat(document.getElementById('eligibleDays').value) || 0;
+            
+                // Calculate the Payable Amount
+                const payableAmount = dailyAverage * eligibleDays;
+            
+                // Update the Payable Amount field
+                document.getElementById('payableAmount').value = payableAmount.toFixed(2); // Display result with 2 decimal places
+            }    
+
 
         function submitForm() {
             // Collect data
