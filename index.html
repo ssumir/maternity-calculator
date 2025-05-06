@@ -222,6 +222,17 @@
             document.getElementById('totalPayableWord').value = convertNumberToWords(totalPayableAmount); // In Words
         }
 
+        // Number to Words Conversion
+        function convertNumberToWords(num) {
+            // (Conversion logic here as in the previous example)
+        }
+        
+        // Add Event Listeners After DOM Loads
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('payableAmount').addEventListener('input', updateTotalPayableAmount);
+            document.getElementById('currentTotalSalary').addEventListener('input', updateTotalPayableAmount);
+        });
+
         // Function to convert numbers to words
         function convertNumberToWords(num) {
             const a = [
@@ -295,8 +306,8 @@
                 currentBonus: document.getElementById('currentBonus').value,
                 currentOthers: document.getElementById('currentOthers').value,
                 currentTotalSalary: document.getElementById('currentTotalSalary').value,
-                payableAmountDigit: document.getElementById('payableAmountDigit').value,
-                payableAmountWord: document.getElementById('payableAmountWord').value,
+                totalPayableDigit: document.getElementById('totalPayableDigit').value,
+                totalPayableWord: document.getElementById('totalPayableWord').value,
             };
 
             // Store data in localStorage
