@@ -72,10 +72,14 @@
                 </div>
             </fieldset>
 
-            <!-- History of Last Month's Take-Home Salary -->
+            <!-- History of Last Month's Attendance & Take-Home Salary -->
             <fieldset class="border border-gray-300 rounded p-4">
-                <legend class="text-lg font-semibold">History of Last Month's Take-Home Salary</legend>
+                <legend class="text-lg font-semibold">History of Last Month's Attendance & Take-Home Salary</legend>
                 <div class="grid grid-cols-2 gap-4">
+                    <div>
+                    <label for="attendanceDays" class="block text-sm font-medium text-gray-700">Days of Attendance</label>
+                    <input type="number" id="attendanceDays" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    </div>
                     <div>
                         <label for="lastMonthSalary" class="block text-sm font-medium text-gray-700">Salary (BDT)</label>
                         <input type="number" id="lastMonthSalary" oninput="updateTotalIncome()" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
@@ -94,16 +98,7 @@
                     </div>
                 </div>
             </fieldset>
-
-            <!-- Last Month's Attendance -->
-            <fieldset class="border border-gray-300 rounded p-4">
-                <legend class="text-lg font-semibold">Last Month's Attendance</legend>
-                <div>
-                    <label for="attendanceDays" class="block text-sm font-medium text-gray-700">Days of Attendance</label>
-                    <input type="number" id="attendanceDays" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
-                </div>
-            </fieldset>
-
+            
             <div class="flex justify-end mt-6">
                 <button type="button" onclick="submitForm()" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Submit</button>
             </div>
