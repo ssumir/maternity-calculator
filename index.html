@@ -248,45 +248,59 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Function to convert numbers to words
         function convertNumberToWords(num) {
-            const a = [
-                "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
-                "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"
-            ];
-            const b = [
-                "", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"
-            ];
-            const unit = ["", "thousand", "lakh", "crore"];
-        
-            if (num === 0) return "zero";
-        
-            const words = [];
-            let u = 0;
-        
-            while (num > 0) {
-                const chunk = num % 1000;
-                if (chunk !== 0) {
-                    const chunkWords = [];
-                    const hundreds = Math.floor(chunk / 100);
-                    const remainder = chunk % 100;
-        
-                    if (hundreds > 0) chunkWords.push(a[hundreds] + " hundred");
-                    if (remainder > 0) {
-                        if (remainder < 20) chunkWords.push(a[remainder]);
-                        else {
-                            const tens = Math.floor(remainder / 10);
-                            const units = remainder % 10;
-                            chunkWords.push(b[tens] + (units > 0 ? " " + a[units] : ""));
-                        }
-                    }
-        
-                    words.unshift(chunkWords.join(" ") + " " + unit[u]);
+    const a = [
+        "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+        "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"
+    ];
+    const b = [
+        "", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"
+    ];
+    const unit = ["", "thousand", "lakh", "crore"];
+
+    if (num === 0) return "zero";
+
+    let words = [];
+    const [integerPart, decimalPart] = num.toString().split(".");
+
+    // Convert integer part
+    let n = parseInt(integerPart);
+    let u = 0;
+    while (n > 0) {
+        const chunk = n % 1000;
+        if (chunk !== 0) {
+            const chunkWords = [];
+            const hundreds = Math.floor(chunk / 100);
+            const remainder = chunk % 100;
+
+            if (hundreds > 0) chunkWords.push(a[hundreds] + " hundred");
+            if (remainder > 0) {
+                if (remainder < 20) {
+                    chunkWords.push(a[remainder]);
+                } else {
+                    const tens = Math.floor(remainder / 10);
+                    const units = remainder % 10;
+                    chunkWords.push(b[tens] + (units > 0 ? " " + a[units] : ""));
                 }
-                u++;
-                num = Math.floor(num / 1000);
             }
-        
-            return words.join(" ").trim();
+            words.unshift(chunkWords.join(" ") + " " + unit[u]);
         }
+        u++;
+        n = Math.floor(n / 1000);
+    }
+
+    // Convert decimal part, if any
+    if (decimalPart && parseInt(decimalPart) > 0) {
+        words.push("and");
+        const decimalWords = decimalPart
+            .split("")
+            .map((digit) => a[parseInt(digit)])
+            .join(" ");
+        words.push(decimalWords + " paisa");
+    }
+
+    return words.join(" ").trim();
+}
+
 
 
 
