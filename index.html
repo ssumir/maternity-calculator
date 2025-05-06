@@ -49,9 +49,9 @@
                 </div>
             </fieldset>
 
-            <!-- History of Maternity -->
+            <!-- Medical history & duration of maternity leave -->
             <fieldset class="border border-gray-300 rounded p-4">
-                <legend class="text-lg font-semibold">History of Maternity</legend>
+                <legend class="text-lg font-semibold">Medical history & duration of maternity leave</legend>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label for="dateOfSymptom" class="block text-sm font-medium text-gray-700">Date of Symptom</label>
@@ -222,7 +222,7 @@ function updateTotalPayableAmount() {
     const totalPayableAmount = payableAmount + currentTotalSalary;
 
     // Update fields
-    document.getElementById('totalPayableDigit').value = totalPayableAmount.toFixed(2);
+    document.getElementById('totalPayableDigit').value = totalPayableAmount.toFixed();
     document.getElementById('totalPayableWord').value = convertNumberToWords(totalPayableAmount);
 }
 
