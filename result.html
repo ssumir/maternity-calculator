@@ -13,20 +13,20 @@
             body {
                 background-color: white;
             }
-            .footer {
+/*             .footer {
                 position: fixed;
                 bottom: 0;
                 width: 100%;
                 text-align: center;
                 background-color: white;
-            }
+            } */
         }
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col">
 
     <!-- Header Section -->
-    <header class="bg-blue-500 text-white py-4">
+<!--     <header class="bg-blue-500 text-white py-4">
         <div class="container mx-auto flex justify-between items-center px-6">
             <div class="flex items-center space-x-4">
                 <img src="logo.png" alt="Company Logo" class="h-10">
@@ -36,14 +36,16 @@
                 <p class="text-sm">Date: <span id="currentDate"></span></p>
             </div>
         </div>
-    </header>
+    </header> -->
 
     <!-- Main Content -->
     <main class="flex-grow bg-white shadow-lg rounded-lg p-6 w-full max-w-4xl mx-auto mt-4">
-        <h1 class="text-2xl font-bold mb-6 text-center">Maternity Benefit Result</h1>
+        <h1 class="text-2xl font-bold mb-6 text-center">MG SHIRTEX LTD.</h1>
+        <h6 class="text-2xl font-bold mb-6 text-center">32, Luxmipura, Chandona, Joydebpur, Gazipur-1700</h6>
+        <h1 class="text-2xl font-bold mb-6 text-center">Details of Maternity Benefit</h1>
         
         <div id="resultContainer" class="space-y-6">
-            <!-- Dynamic content will be inserted here -->
+            Signature
         </div>
 
         <div class="flex justify-end mt-6">
@@ -63,12 +65,12 @@
     </main>
 
     <!-- Footer Section -->
-    <footer class="footer bg-gray-800 text-white py-4">
+<!--     <footer class="footer bg-gray-800 text-white py-4">
         <div class="text-center text-sm">
             <p>Confidential Document - For Internal Use Only</p>
             <p>Contact: support@company.com | Phone: +880-1234-567890</p>
         </div>
-    </footer>
+    </footer> -->
 
     <script>
         // Utility function to format currency
@@ -101,7 +103,7 @@
                         ["Category", formData.category],
                         ["Section", formData.section],
                         ["Date of Joining", formData.dateOfJoining],
-                        ["Monthly Salary (BDT)", formatCurrency(formData.monthlySalary) || "N/A"]
+                        ["Monthly Salary", formatCurrency(formData.monthlySalary) || "N/A"]
                     ]
                 },
                 {
@@ -117,10 +119,10 @@
                     title: "History of Last Month's Attendance & Take-Home Salary",
                     fields: [
                         ["Days of Attendance", formData.attendanceDays],
-                        ["Salary (BDT)", formatCurrency(formData.lastMonthSalary)],
-                        ["Bonus (BDT)", formatCurrency(formData.bonus)],
+                        ["Salary", formatCurrency(formData.lastMonthSalary)],
+                        ["Bonus", formatCurrency(formData.bonus)],
                         ["Others (if any)", formatCurrency(formData.others)],
-                        ["Total Income (BDT)", formatCurrency(formData.totalIncome)],
+                        ["Total Income", formatCurrency(formData.totalIncome)],
                         ["Daily Average Amount of Taka", formatCurrency(formData.dailyAverage)]
                     ]
                 },
@@ -129,23 +131,23 @@
                     fields: [
                         ["Installment No.", formData.installmentNo],
                         ["Eligible for how many days", formData.eligibleDays],
-                        ["Payable Amount (Taka)", formatCurrency(formData.payableAmount)]
+                        ["Payable Amount", formatCurrency(formData.payableAmount)]
                     ]
                 },
                 {
                     title: "Current Month's Payable Salary",
                     fields: [
                         ["Days of Attendance", formData.currentAttendanceDays],
-                        ["Salary (BDT)", formatCurrency(formData.currentSalary)],
-                        ["Bonus (BDT)", formatCurrency(formData.currentBonus)],
+                        ["Salary", formatCurrency(formData.currentSalary)],
+                        ["Bonus", formatCurrency(formData.currentBonus)],
                         ["Others (if any)", formatCurrency(formData.currentOthers)],
-                        ["Total Salary (BDT)", formatCurrency(formData.currentTotalSalary)]
+                        ["Total Salary", formatCurrency(formData.currentTotalSalary)]
                     ]
                 },
                 {
                     title: "Total Payable Amount",
                     fields: [
-                        ["In Digit (BDT)", formatCurrency(formData.totalPayableDigit)],
+                        ["In Digit", formatCurrency(formData.totalPayableDigit)],
                         ["In Word", formData.totalPayableWord || "N/A"]
                     ]
                 }
