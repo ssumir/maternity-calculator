@@ -6,13 +6,36 @@
     <title>Maternity Benefit Result</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @media print {
+       @media print {
+            body {
+                width: 210mm;
+                height: 297mm;
+                margin: 0 auto;
+                background-color: white;
+            }
+            .print-area {
+                page-break-after: avoid;
+            }
             button {
                 display: none;
             }
-            body {
-                background-color: white;
-            }
+        }
+        .signature-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px dashed #ccc;
+        }
+        .signature-box {
+            text-align: center;
+            flex: 1;
+            margin: 0 10px;
+        }
+        .signature-box span {
+            display: block;
+            margin-top: 20px;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -20,13 +43,27 @@
     <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-4xl">
         <div>
             <h1 class="text-2xl font-bold text-center">MG SHIRTEX LTD.</h1>
-            <h6 class="text-center">32, Luxmipura, Joydebpur, Gazipur Sadar, Gazipur-1700</h6>
+            <h6 class="text-center mb-4">32, Luxmipura, Joydebpur, Gazipur Sadar, Gazipur-1700</h6>
         </div>
-        <h1 class="text-2xl font-bold mb-6 text-center">Particulers of Maternity Benefit</h1>
+        <h1 class="text-2xl font-bold mb-4 text-center">Particulers of Maternity Benefit</h1>
         <div id="resultContainer" class="space-y-6">
             <!-- Dynamic content will be inserted here -->
         </div>
-        <h1 class="text-2xl font-bold mb-6 text-center">Signature</h1>
+        <!-- Signature Section -->
+        <div class="signature-section">
+            <div class="signature-box">
+                <div class="border-t border-gray-500 w-full"></div>
+                <span>Employee Signature</span>
+            </div>
+            <div class="signature-box">
+                <div class="border-t border-gray-500 w-full"></div>
+                <span>HAC Signature</span>
+            </div>
+            <div class="signature-box">
+                <div class="border-t border-gray-500 w-full"></div>
+                <span>Authorized Signature</span>
+            </div>
+        </div>
         <div class="flex justify-end mt-6">
             <button 
                 onclick="window.close()" 
